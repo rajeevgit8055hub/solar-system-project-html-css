@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Solar System with Falling Star </title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color:black;
+            overflow: hidden;
+        }
+
+        /* Falling Star */
+        .falling-star {
+            position: absolute;
+            width: 15px;
+            height: 5px;
+            background: radial-gradient(circle, #ffffff, #ffffff, #ffffff); /* Updated color to pure white */
+            border-radius: 50%;
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.8);
+            animation: fall 4s linear infinite, twinkle 0.5s alternate infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10px; /* Starting from above the screen */
+                left: calc(100% * var(--start-x)); /* Random starting position on top */
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 50vh; /* Falling half-way across the screen */
+                left: calc(100% * var(--end-x)); /* Random horizontal position on the opposite side */
+                opacity: 0; /* Fading out */
+            }
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Solar System */
+        .universe {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 0 5em white;
+            animation: twinkle 5s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        .solar-system {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sun {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: orangered;
+            box-shadow: 0 0 5em 2em orangered;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px outset deepskyblue;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .planet,
+        .moon,
+        .asteroid {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .planet {
+            box-shadow: 0 0 1em white;
+            width: 30px;
+            height: 30px;
+        }
+
+        #earth {
+            background: linear-gradient(45deg, #32CD32, #006400); /* Earth - Green Gradient */
+        }
+
+        #mars {
+            background: linear-gradient(45deg, #CC691E, #8B1513); /* Mars - Red to Brown Gradient */
+        }
+
+        #jupiter {
+            background: linear-gradient(45deg, #D2691E, #8B4513); /* Jupiter - Brownish Gradient */
+        }
+
+        #saturn {
+            background: linear-gradient(45deg, #FFD700, #DAA520); /* Saturn - Gold to Dark Gold Gradient */
+        }
+
+        #venus {
+            background: linear-gradient(45deg, #FF6347, #D2691E); /* Venus - Red and Orange Gradient */
+        }
+
+        #mercury {
+            background: linear-gradient(45deg, #A9A9A9, #696969); /* Mercury - Grey Gradient */
+        }
+
+        #neptune {
+            background: linear-gradient(45deg, #4682B4, #5F9EA0); /* Neptune - Blue Gradient */
+        }
+
+        #uranus {
+            background: linear-gradient(45deg, #7FFFD4, #4682B4); /* Uranus - Light Blue Gradient */
+        }
+
+        .moon {
+            background: linear-gradient(45deg, #D3D3D3, #A9A9A9); /* Moon - Light to Dark Grey */
+            box-shadow: 0 0 1em white;
+            width: 15px;
+            height: 15px;
+        }
+
+        .earth-in-moon-orbit {
+            background: linear-gradient(45deg, #32CD32, #006400); /* Earth inside Moon's Orbit (Green Gradient) */
+            box-shadow: 0 0 1em green;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .asteroid {
+            background-color: grey;
+            box-shadow: 0 0 1em saddlebrown;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes orbit {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .galaxy {
+            position: absolute;
+            border: 3px double magenta;
+            box-shadow: 0 0 1em magenta;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: rotate 120s linear infinite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="universe">
+    <!-- Galaxies -->
+    <div class="galaxy" style="top: 0; left: 50%;"></div>
+    <div class="galaxy" style="top: 50%; left: 100%;"></div>
+    <div class="galaxy" style="top: 80%; left: 10%;"></div>
+
+    <div class="solar-system">
+        <!-- Sun -->
+        <div class="sun"></div>
+
+        <!-- Orbits and Planets -->
+        <div class="orbit" style="width: 300px; height: 300px; animation: orbit 10s linear infinite;">
+            <!-- Remove this Earth as it is outside the Moon's orbit -->
+            <div class="orbit" style="width: 80px; height: 80px; animation: orbit 5s linear infinite;">
+                <!-- Earth inside the Moon's orbit -->
+                <div class="earth-in-moon-orbit"></div>
+                <div class="moon" style="top: 0; left: 50%;"></div>
+            </div>
+        </div>
+
+        <div class="orbit" style="width: 500px; height: 500px; animation: orbit 20s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="mars"></div>
+        </div>
+
+        <div class="orbit" style="width: 700px; height: 700px; animation: orbit 30s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="jupiter"></div>
+        </div>
+
+        <div class="orbit" style="width: 1000px; height: 1000px; animation: orbit 40s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="saturn"></div>
+        </div>
+
+        <div class="orbit" style="width: 1200px; height: 1200px; animation: orbit 50s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="venus"></div>
+        </div>
+
+        <div class="orbit" style="width: 1500px; height: 1500px; animation: orbit 60s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="mercury"></div>
+        </div>
+
+        <div class="orbit" style="width: 1800px; height: 1800px; animation: orbit 70s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="neptune"></div>
+        </div>
+
+        <div class="orbit" style="width: 2000px; height: 2000px; animation: orbit 80s linear infinite;">
+            <div class="planet" style="top: 0; left: 50%;" id="uranus"></div>
+        </div>
+
+        <!-- Asteroids (Random movement) -->
+        <div class="asteroid" style="top: 50%; left: 70%;"></div>
+        <div class="asteroid" style="top: 60%; left: 10%;"></div>
+        <div class="asteroid" style="top: 40%; left: 20%;"></div>
+    </div>
+
+    <!-- Stars in Universe -->
+    <div class="star" style="top: 10%; left: 15%;"></div>
+    <div class="star" style="top: 20%; left: 80%;"></div>
+    <div class="star" style="top: 50%; left: 50%;"></div>
+    <div class="star" style="top: 70%; left: 30%;"></div>
+    <div class="star" style="top: 80%; left: 85%;"></div>
+    <div class="star" style="top: 25%; left: 60%;"></div>
+    <div class="star" style="top: 90%; left: 90%;"></div>
+</div>
+
+<!-- Falling Star -->
+<div class="falling-star" style="--start-x: 0.1; --end-x: 0.9;"></div>
+
+</body>
+</html>
